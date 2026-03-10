@@ -31,7 +31,7 @@ function calculateAdjustedPortions(
   ageMultipliers: Map<string, AgeMultiplier>,
   ageGroup: string,
   dietType: string,
-  recipeAdjustmentCategory: string
+  recipeAdjustmentCategory: string | null
 ): Decimal {
   const count = portionCounts.find(
     (pc) => pc.age_group === ageGroup && pc.diet_type === dietType
@@ -39,6 +39,10 @@ function calculateAdjustedPortions(
 
   if (!count) {
     return new Decimal(0);
+  }
+
+  if (!recipeAdjustmentCategory) {
+    throw new Error(`Recipe adjustment category missing for ${ageGroup}`);
   }
 
   const multiplierKey = `${ageGroup}:${recipeAdjustmentCategory}`;

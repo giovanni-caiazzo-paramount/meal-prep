@@ -13,7 +13,8 @@ export default function OptimizationPage() {
           AI Menu Optimization
         </h1>
         <p className="text-gray-600">
-          Get AI suggestions to optimize your menu based on leftover inventory
+          Get AI suggestions from your local LM Studio model based on leftover
+          inventory
         </p>
       </div>
 
@@ -43,7 +44,7 @@ export default function OptimizationPage() {
         <ol className="space-y-2 text-sm text-gray-600 mb-6">
           <li>1. ✅ Create your menu plan (Menu Planning page)</li>
           <li>2. ✅ Record current inventory (Inventory page)</li>
-          <li>3. ⚠️ Configure OpenAI API key in .env.local</li>
+          <li>3. ⚠️ Start LM Studio local server and load a model</li>
           <li>4. 📊 Generate suggestions and review them</li>
           <li>5. ✓ Approve or reject changes</li>
         </ol>
@@ -51,7 +52,12 @@ export default function OptimizationPage() {
         <div className="p-4 bg-amber-50 rounded-lg border border-amber-200 mb-4">
           <p className="text-sm text-amber-900">
             <strong>Configuration:</strong> Add{" "}
-            <code className="bg-white px-2 py-1 rounded">OPENAI_API_KEY</code>{" "}
+            <code className="bg-white px-2 py-1 rounded">
+              LMSTUDIO_BASE_URL
+            </code>
+            , <code className="bg-white px-2 py-1 rounded">LMSTUDIO_MODEL</code>
+            , and{" "}
+            <code className="bg-white px-2 py-1 rounded">LMSTUDIO_API_KEY</code>{" "}
             to your{" "}
             <code className="bg-white px-2 py-1 rounded">.env.local</code> file
           </p>

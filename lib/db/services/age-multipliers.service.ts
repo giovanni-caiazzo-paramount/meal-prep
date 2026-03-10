@@ -11,6 +11,21 @@ import type {
 } from "../types";
 import { AgeMultiplierSchema } from "../schemas";
 
+function toStrictAgeMultiplier(input: unknown): AgeMultiplier | null {
+  const parsed = AgeMultiplierSchema.parse(input);
+
+  if (parsed.ingredient_category === null) {
+    return null;
+  }
+
+  return {
+    age_group: parsed.age_group,
+    ingredient_category:
+      parsed.ingredient_category as PortionAdjustmentCategory,
+    multiplier: parsed.multiplier,
+  };
+}
+
 export async function getAgeMultipliers(): Promise<AgeMultiplier[]> {
   const supabase = createServerSupabaseClient();
 
@@ -25,7 +40,15 @@ export async function getAgeMultipliers(): Promise<AgeMultiplier[]> {
     throw new Error(`Failed to fetch age multipliers: ${error.message}`);
   }
 
-  return (data as unknown[]).map((item) => AgeMultiplierSchema.parse(item));
+  return (data as unknown[])
+    .map((item) => {
+      const normalized = toStrictAgeMultiplier(item);
+      if (!normalized) {
+        console.warn("Skipping invalid age multiplier row:", item);
+      }
+      return normalized;
+    })
+    .filter((item): item is AgeMultiplier => item !== null);
 }
 
 export async function getAgeMultiplier(
@@ -48,7 +71,14 @@ export async function getAgeMultiplier(
     );
   }
 
-  return AgeMultiplierSchema.parse(data);
+  const normalized = toStrictAgeMultiplier(data);
+  if (!normalized) {
+    throw new Error(
+      `Invalid age multiplier value for ${ageGroup} / ${ingredientCategory}`
+    );
+  }
+
+  return normalized;
 }
 
 export async function upsertAgeMultiplier(
@@ -67,5 +97,10 @@ export async function upsertAgeMultiplier(
     throw new Error(`Failed to save age multiplier: ${error.message}`);
   }
 
-  return AgeMultiplierSchema.parse(data);
+  const normalized = toStrictAgeMultiplier(data);
+  if (!normalized) {
+    throw new Error("Invalid age multiplier value returned from database");
+  }
+
+  return normalized;
 }

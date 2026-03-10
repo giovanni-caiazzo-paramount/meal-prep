@@ -3,11 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, Input } from "@/components/ui";
-import type {
-  AgeGroup,
-  AgeMultiplier,
-  PortionAdjustmentCategory,
-} from "@/lib/db/types";
+import type { AgeGroup, AgeMultiplier } from "@/lib/db/types";
 import {
   deleteAgeMultiplierAction,
   upsertAgeMultiplierAction,
@@ -18,11 +14,12 @@ interface SettingsAgeMultipliersClientProps {
 }
 
 const AGE_GROUPS: AgeGroup[] = ["Krippe", "Kita", "Hort"];
-const CATEGORIES: PortionAdjustmentCategory[] = ["Anders", "Gemüse", "Suppe"];
+type StrictPortionCategory = "Anders" | "Gemüse" | "Suppe";
+const CATEGORIES: StrictPortionCategory[] = ["Anders", "Gemüse", "Suppe"];
 
 interface MultiplierForm {
   age_group: AgeGroup;
-  ingredient_category: PortionAdjustmentCategory;
+  ingredient_category: StrictPortionCategory;
   multiplier: string;
 }
 
@@ -91,7 +88,7 @@ export default function SettingsAgeMultipliersClient({
 
   const handleDelete = async (
     ageGroup: AgeGroup,
-    ingredientCategory: PortionAdjustmentCategory
+    ingredientCategory: StrictPortionCategory
   ) => {
     setIsSaving(true);
     const result = await deleteAgeMultiplierAction(
@@ -118,8 +115,7 @@ export default function SettingsAgeMultipliersClient({
   const fillForm = (item: AgeMultiplier) => {
     setForm({
       age_group: item.age_group,
-      ingredient_category:
-        item.ingredient_category as PortionAdjustmentCategory,
+      ingredient_category: item.ingredient_category as StrictPortionCategory,
       multiplier: String(item.multiplier),
     });
   };
@@ -166,7 +162,7 @@ export default function SettingsAgeMultipliersClient({
                 setForm((current) => ({
                   ...current,
                   ingredient_category: event.target
-                    .value as PortionAdjustmentCategory,
+                    .value as StrictPortionCategory,
                 }))
               }
               className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900"
@@ -249,7 +245,7 @@ export default function SettingsAgeMultipliersClient({
                       onClick={() =>
                         handleDelete(
                           item.age_group,
-                          item.ingredient_category as PortionAdjustmentCategory
+                          item.ingredient_category as StrictPortionCategory
                         )
                       }
                       loading={isSaving}

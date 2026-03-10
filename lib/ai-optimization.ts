@@ -1,19 +1,22 @@
 /**
  * AI Menu Optimization Service
- * Uses OpenAI to suggest menu changes based on inventory
+ * Uses LM Studio (OpenAI-compatible local endpoint)
  */
 
 import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { z } from "zod";
+import env from "./env";
 import type {
   MenuItem,
   RecipeWithIngredients,
   InventoryItem,
-  MenuOptimizationSuggestion,
-  ShoppingListItem,
 } from "./db/types";
-import { calculateShoppingList } from "./calculations";
+
+const lmstudio = createOpenAI({
+  baseURL: `${env.LMSTUDIO_BASE_URL}/v1`,
+  apiKey: env.LMSTUDIO_API_KEY,
+});
 
 // Zod schema for AI response
 const MenuSuggestionSchema = z.object({
@@ -75,7 +78,7 @@ export async function generateMenuOptimizationSuggestions(
 
   try {
     const suggestions = await generateObject({
-      model: openai("gpt-4-turbo"),
+      model: lmstudio(env.LMSTUDIO_MODEL),
       schema: z.array(MenuSuggestionSchema).max(3), // Max 3 suggestions
       prompt: `
         You are a smart catering optimization assistant. 

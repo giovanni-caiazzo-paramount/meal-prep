@@ -49,9 +49,19 @@ export default function SystemSettingsPage() {
               hint: "Used server-side only — never expose this to the client",
             },
             {
-              key: "OPENAI_API_KEY",
-              label: "OpenAI API Key",
-              hint: "Required for AI-powered menu optimization",
+              key: "LMSTUDIO_BASE_URL",
+              label: "LM Studio Base URL",
+              hint: "Local OpenAI-compatible endpoint URL (default: http://127.0.0.1:1234)",
+            },
+            {
+              key: "LMSTUDIO_MODEL",
+              label: "LM Studio Model",
+              hint: "Model identifier loaded in LM Studio",
+            },
+            {
+              key: "LMSTUDIO_API_KEY",
+              label: "LM Studio API Key",
+              hint: "Any non-empty value accepted by local endpoint",
             },
           ].map(({ key, label, hint }) => (
             <div
@@ -81,7 +91,7 @@ export default function SystemSettingsPage() {
           <li>☐ Set portion counts for each Kita</li>
           <li>☐ Verify age multipliers are set</li>
           <li>☐ Test menu planning workflow</li>
-          <li>☐ Configure OpenAI API key for AI optimization</li>
+          <li>☐ Configure LM Studio connection for AI optimization</li>
         </ul>
       </Card>
 
