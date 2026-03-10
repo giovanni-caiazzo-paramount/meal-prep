@@ -1,11 +1,11 @@
 /**
  * Shopping List Page
+ * Step 1: AI reviews menu and suggests swaps based on inventory (Option C)
+ * Step 2: Shopping list is calculated using the (potentially updated) menu
  */
 
-import { Suspense } from "react";
 import { Card } from "@/components/ui";
-import { ShoppingListView } from "@/components/features";
-import { getShoppingListForWeek } from "@/app/actions/calculations.actions";
+import { ShoppingPageClient } from "@/components/features";
 
 function getCurrentWeekStart() {
   const today = new Date();
@@ -14,50 +14,27 @@ function getCurrentWeekStart() {
   return weekStart.toISOString().split("T")[0];
 }
 
-async function ShoppingListPageContent() {
-  const weekStartDate = getCurrentWeekStart();
-  const result = await getShoppingListForWeek(weekStartDate);
-
-  if (!result.success) {
-    return (
-      <Card className="bg-red-50 border-red-200">
-        <p className="text-red-800">{result.message}</p>
-      </Card>
-    );
-  }
-
-  return <ShoppingListView items={result.data} weekStartDate={weekStartDate} />;
-}
-
 export default function ShoppingListPage() {
+  const weekStartDate = getCurrentWeekStart();
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Shopping List</h1>
         <p className="text-gray-600">
-          Automatic shopping list based on menu plan and current inventory
+          AI reviews your menu for inventory savings, then generates an accurate shopping list.
         </p>
       </div>
 
-      <Suspense
-        fallback={
-          <Card>
-            <p className="text-gray-500">Loading shopping list...</p>
-          </Card>
-        }
-      >
-        <ShoppingListPageContent />
-      </Suspense>
+      <ShoppingPageClient weekStartDate={weekStartDate} />
 
       <Card className="border-l-4 border-l-green-500">
         <h2 className="font-semibold text-gray-900 mb-2">📝 How it works</h2>
         <ul className="space-y-1 text-sm text-gray-600">
-          <li>
-            • Calculate required ingredients based on menu and portion counts
-          </li>
-          <li>• Subtract current inventory from requirements</li>
-          <li>• Present items to buy with exact quantities</li>
-          <li>• Update inventory regularly for accurate calculations</li>
+          <li>• AI suggests recipe swaps that use up leftover inventory</li>
+          <li>• You approve or reject each suggestion</li>
+          <li>• Shopping list is calculated on the approved menu</li>
+          <li>• Inventory is subtracted from requirements automatically</li>
         </ul>
       </Card>
     </div>
