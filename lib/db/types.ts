@@ -8,7 +8,7 @@ export type AgeGroup = "Krippe" | "Kita" | "Hort";
 export type DietType = "vegetarisch" | "fleisch" | "pescetarisch";
 export type RecipeCategory = "Hauptspeise" | "Nachtisch" | "Rohkost";
 export type PortionAdjustmentCategory = "Anders" | "Gemüse" | "Suppe";
-export type IngredientUnit = "g" | "ml";
+export type IngredientUnit = "g" | "ml" | "Stück";
 
 // Database Models
 export interface Kita {

@@ -12,8 +12,16 @@ export const DietTypeSchema = z.enum([
   "fleisch",
   "pescetarisch",
 ]);
-export const RecipeCategorySchema = z.string().nullable();
-export const PortionAdjustmentCategorySchema = z.string().nullable();
+export const RecipeCategorySchema = z.enum([
+  "Hauptspeise",
+  "Nachtisch",
+  "Rohkost",
+]);
+export const PortionAdjustmentCategorySchema = z.enum([
+  "Anders",
+  "Gemüse",
+  "Suppe",
+]);
 export const IngredientUnitSchema = z.enum(["g", "ml", "Stück"]);
 
 // Database model schemas

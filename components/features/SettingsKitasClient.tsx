@@ -116,18 +116,28 @@ export default function SettingsKitasClient({
             label="Name"
             value={newKita.name}
             onChange={(event) =>
-              setNewKita((current) => ({ ...current, name: event.target.value }))
+              setNewKita((current) => ({
+                ...current,
+                name: event.target.value,
+              }))
             }
           />
           <Input
             label="City"
             value={newKita.city}
             onChange={(event) =>
-              setNewKita((current) => ({ ...current, city: event.target.value }))
+              setNewKita((current) => ({
+                ...current,
+                city: event.target.value,
+              }))
             }
           />
           <div className="flex items-end">
-            <Button onClick={handleCreate} loading={isSaving} className="w-full">
+            <Button
+              onClick={handleCreate}
+              loading={isSaving}
+              className="w-full"
+            >
               Create
             </Button>
           </div>
@@ -139,9 +149,15 @@ export default function SettingsKitasClient({
           <thead>
             <tr className="border-b border-gray-200">
               <th className="p-2 text-left font-semibold text-gray-700">ID</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Name</th>
-              <th className="p-2 text-left font-semibold text-gray-700">City</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Actions</th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Name
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                City
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -163,7 +179,9 @@ export default function SettingsKitasClient({
                         }
                       />
                     ) : (
-                      <span className="font-medium text-gray-900">{kita.name}</span>
+                      <span className="font-medium text-gray-900">
+                        {kita.name}
+                      </span>
                     )}
                   </td>
                   <td className="p-2">

@@ -153,7 +153,10 @@ export default function SettingsPortionCountsClient({
             <select
               value={form.kita_id}
               onChange={(event) =>
-                setForm((current) => ({ ...current, kita_id: event.target.value }))
+                setForm((current) => ({
+                  ...current,
+                  kita_id: event.target.value,
+                }))
               }
               className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900"
             >
@@ -166,7 +169,9 @@ export default function SettingsPortionCountsClient({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Age Group</label>
+            <label className="text-sm font-medium text-gray-700">
+              Age Group
+            </label>
             <select
               value={form.age_group}
               onChange={(event) =>
@@ -231,11 +236,21 @@ export default function SettingsPortionCountsClient({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="p-2 text-left font-semibold text-gray-700">Kita</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Age Group</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Diet</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Children</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Actions</th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Kita
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Age Group
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Diet
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Children
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -249,7 +264,9 @@ export default function SettingsPortionCountsClient({
                 </td>
                 <td className="p-2 text-gray-600">{item.age_group}</td>
                 <td className="p-2 text-gray-600">{item.diet_type}</td>
-                <td className="p-2 text-right text-gray-700">{item.children_count}</td>
+                <td className="p-2 text-right text-gray-700">
+                  {item.children_count}
+                </td>
                 <td className="p-2">
                   <div className="flex justify-end gap-2">
                     <Button

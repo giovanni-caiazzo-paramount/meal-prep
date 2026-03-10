@@ -94,7 +94,10 @@ export default function SettingsAgeMultipliersClient({
     ingredientCategory: PortionAdjustmentCategory
   ) => {
     setIsSaving(true);
-    const result = await deleteAgeMultiplierAction(ageGroup, ingredientCategory);
+    const result = await deleteAgeMultiplierAction(
+      ageGroup,
+      ingredientCategory
+    );
     setIsSaving(false);
 
     setMessage(result.message);
@@ -115,7 +118,8 @@ export default function SettingsAgeMultipliersClient({
   const fillForm = (item: AgeMultiplier) => {
     setForm({
       age_group: item.age_group,
-      ingredient_category: item.ingredient_category as PortionAdjustmentCategory,
+      ingredient_category:
+        item.ingredient_category as PortionAdjustmentCategory,
       multiplier: String(item.multiplier),
     });
   };
@@ -131,7 +135,9 @@ export default function SettingsAgeMultipliersClient({
       <Card title="Create / Update Multiplier">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Age Group</label>
+            <label className="text-sm font-medium text-gray-700">
+              Age Group
+            </label>
             <select
               value={form.age_group}
               onChange={(event) =>
@@ -151,13 +157,16 @@ export default function SettingsAgeMultipliersClient({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Category</label>
+            <label className="text-sm font-medium text-gray-700">
+              Category
+            </label>
             <select
               value={form.ingredient_category}
               onChange={(event) =>
                 setForm((current) => ({
                   ...current,
-                  ingredient_category: event.target.value as PortionAdjustmentCategory,
+                  ingredient_category: event.target
+                    .value as PortionAdjustmentCategory,
                 }))
               }
               className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900"
@@ -177,7 +186,10 @@ export default function SettingsAgeMultipliersClient({
             step="0.01"
             value={form.multiplier}
             onChange={(event) =>
-              setForm((current) => ({ ...current, multiplier: event.target.value }))
+              setForm((current) => ({
+                ...current,
+                multiplier: event.target.value,
+              }))
             }
           />
 
@@ -193,10 +205,18 @@ export default function SettingsAgeMultipliersClient({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="p-2 text-left font-semibold text-gray-700">Age Group</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Category</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Multiplier</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Actions</th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Age Group
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Category
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Multiplier
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -205,9 +225,15 @@ export default function SettingsAgeMultipliersClient({
                 key={`${item.age_group}:${item.ingredient_category}`}
                 className="border-b border-gray-100"
               >
-                <td className="p-2 font-medium text-gray-900">{item.age_group}</td>
-                <td className="p-2 text-gray-600">{item.ingredient_category}</td>
-                <td className="p-2 text-right text-gray-700">{item.multiplier}</td>
+                <td className="p-2 font-medium text-gray-900">
+                  {item.age_group}
+                </td>
+                <td className="p-2 text-gray-600">
+                  {item.ingredient_category}
+                </td>
+                <td className="p-2 text-right text-gray-700">
+                  {item.multiplier}
+                </td>
                 <td className="p-2">
                   <div className="flex justify-end gap-2">
                     <Button

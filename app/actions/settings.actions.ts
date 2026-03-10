@@ -17,7 +17,7 @@ const RecipeInputSchema = z.object({
 
 const IngredientInputSchema = z.object({
   name: z.string().min(1),
-  unit: z.enum(["g", "ml"]),
+  unit: z.enum(["g", "ml", "Stück"]),
 });
 
 const AgeMultiplierInputSchema = z.object({
@@ -188,7 +188,7 @@ export async function deleteRecipeAction(id: number) {
 
 export async function createIngredientAction(input: {
   name: string;
-  unit: "g" | "ml";
+  unit: "g" | "ml" | "Stück";
 }) {
   try {
     const payload = IngredientInputSchema.parse(input);
@@ -213,7 +213,7 @@ export async function updateIngredientAction(
   id: number,
   input: {
     name: string;
-    unit: "g" | "ml";
+    unit: "g" | "ml" | "Stück";
   }
 ) {
   try {

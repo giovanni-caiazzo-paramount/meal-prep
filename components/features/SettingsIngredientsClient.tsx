@@ -19,7 +19,7 @@ interface EditableIngredient {
   unit: IngredientUnit;
 }
 
-const UNITS: IngredientUnit[] = ["g", "ml"];
+const UNITS: IngredientUnit[] = ["g", "ml", "Stück"];
 
 export default function SettingsIngredientsClient({
   initialIngredients,
@@ -124,7 +124,10 @@ export default function SettingsIngredientsClient({
             label="Name"
             value={newIngredient.name}
             onChange={(event) =>
-              setNewIngredient((current) => ({ ...current, name: event.target.value }))
+              setNewIngredient((current) => ({
+                ...current,
+                name: event.target.value,
+              }))
             }
           />
           <div className="flex flex-col gap-2">
@@ -147,7 +150,11 @@ export default function SettingsIngredientsClient({
             </select>
           </div>
           <div className="flex items-end">
-            <Button onClick={handleCreate} loading={isSaving} className="w-full">
+            <Button
+              onClick={handleCreate}
+              loading={isSaving}
+              className="w-full"
+            >
               Create
             </Button>
           </div>
@@ -159,9 +166,15 @@ export default function SettingsIngredientsClient({
           <thead>
             <tr className="border-b border-gray-200">
               <th className="p-2 text-left font-semibold text-gray-700">ID</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Name</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Unit</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Actions</th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Name
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Unit
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -183,7 +196,9 @@ export default function SettingsIngredientsClient({
                         }
                       />
                     ) : (
-                      <span className="font-medium text-gray-900">{ingredient.name}</span>
+                      <span className="font-medium text-gray-900">
+                        {ingredient.name}
+                      </span>
                     )}
                   </td>
                   <td className="p-2">

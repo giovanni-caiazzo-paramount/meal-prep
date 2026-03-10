@@ -23,8 +23,16 @@ interface EditableRecipe {
   portion_adjustment_category: AdjustmentCategory;
 }
 
-const RECIPE_CATEGORIES: RecipeCategory[] = ["Hauptspeise", "Nachtisch", "Rohkost"];
-const ADJUSTMENT_CATEGORIES: AdjustmentCategory[] = ["Anders", "Gemüse", "Suppe"];
+const RECIPE_CATEGORIES: RecipeCategory[] = [
+  "Hauptspeise",
+  "Nachtisch",
+  "Rohkost",
+];
+const ADJUSTMENT_CATEGORIES: AdjustmentCategory[] = [
+  "Anders",
+  "Gemüse",
+  "Suppe",
+];
 
 export default function SettingsRecipesClient({
   initialRecipes,
@@ -139,11 +147,16 @@ export default function SettingsRecipesClient({
             label="Name"
             value={newRecipe.name}
             onChange={(event) =>
-              setNewRecipe((current) => ({ ...current, name: event.target.value }))
+              setNewRecipe((current) => ({
+                ...current,
+                name: event.target.value,
+              }))
             }
           />
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Category</label>
+            <label className="text-sm font-medium text-gray-700">
+              Category
+            </label>
             <select
               value={newRecipe.category}
               onChange={(event) =>
@@ -162,13 +175,16 @@ export default function SettingsRecipesClient({
             </select>
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Adjustment</label>
+            <label className="text-sm font-medium text-gray-700">
+              Adjustment
+            </label>
             <select
               value={newRecipe.portion_adjustment_category}
               onChange={(event) =>
                 setNewRecipe((current) => ({
                   ...current,
-                  portion_adjustment_category: event.target.value as AdjustmentCategory,
+                  portion_adjustment_category: event.target
+                    .value as AdjustmentCategory,
                 }))
               }
               className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900"
@@ -181,7 +197,11 @@ export default function SettingsRecipesClient({
             </select>
           </div>
           <div className="flex items-end">
-            <Button onClick={handleCreate} loading={isSaving} className="w-full">
+            <Button
+              onClick={handleCreate}
+              loading={isSaving}
+              className="w-full"
+            >
               Create
             </Button>
           </div>
@@ -193,10 +213,18 @@ export default function SettingsRecipesClient({
           <thead>
             <tr className="border-b border-gray-200">
               <th className="p-2 text-left font-semibold text-gray-700">ID</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Name</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Category</th>
-              <th className="p-2 text-left font-semibold text-gray-700">Adjustment</th>
-              <th className="p-2 text-right font-semibold text-gray-700">Actions</th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Name
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Category
+              </th>
+              <th className="p-2 text-left font-semibold text-gray-700">
+                Adjustment
+              </th>
+              <th className="p-2 text-right font-semibold text-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -218,7 +246,9 @@ export default function SettingsRecipesClient({
                         }
                       />
                     ) : (
-                      <span className="font-medium text-gray-900">{recipe.name}</span>
+                      <span className="font-medium text-gray-900">
+                        {recipe.name}
+                      </span>
                     )}
                   </td>
                   <td className="p-2">
@@ -250,8 +280,8 @@ export default function SettingsRecipesClient({
                         onChange={(event) =>
                           setDraft((current) => ({
                             ...current,
-                            portion_adjustment_category:
-                              event.target.value as AdjustmentCategory,
+                            portion_adjustment_category: event.target
+                              .value as AdjustmentCategory,
                           }))
                         }
                         className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900"
