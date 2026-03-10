@@ -30,28 +30,28 @@ export const RecipeSchema = z.object({
   name: z.string().min(1).max(255),
   category: RecipeCategorySchema,
   portion_adjustment_category: PortionAdjustmentCategorySchema,
-  created_at: z.string().datetime().optional(),
+  created_at: z.string().datetime({ offset: true }).optional(),
 });
 
 export const IngredientSchema = z.object({
   id: z.number().int().positive(),
   name: z.string().min(1).max(255),
   unit: IngredientUnitSchema,
-  created_at: z.string().datetime().optional(),
+  created_at: z.string().datetime({ offset: true }).optional(),
 });
 
 export const RecipeIngredientSchema = z.object({
   recipe_id: z.number().int().positive(),
   ingredient_id: z.number().int().positive(),
   amount_per_portion: z.number().positive(),
-  created_at: z.string().datetime().optional(),
+  created_at: z.string().datetime({ offset: true }).optional(),
 });
 
 export const MenuItemSchema = z.object({
   date: z.string().date(),
   diet_type: DietTypeSchema,
   recipe_id: z.number().int().positive(),
-  created_at: z.string().datetime().optional(),
+  created_at: z.string().datetime({ offset: true }).optional(),
 });
 
 export const PortionCountSchema = z.object({
@@ -70,7 +70,7 @@ export const AgeMultiplierSchema = z.object({
 export const InventoryItemSchema = z.object({
   ingredient_id: z.number().int().positive(),
   quantity: z.number().nonnegative(),
-  updated_at: z.string().datetime(),
+  updated_at: z.string().datetime({ offset: true }),
 });
 
 // Form input schemas
