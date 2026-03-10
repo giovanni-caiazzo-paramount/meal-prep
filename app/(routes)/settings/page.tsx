@@ -21,7 +21,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Manage schools/kindergartens that receive catering
           </p>
-          <Button variant="primary">Manage Kitas</Button>
+          <Link href="/settings/kitas">
+            <Button variant="primary">Manage Kitas</Button>
+          </Link>
         </Card>
 
         <Card className="flex flex-col">
@@ -31,7 +33,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Create and edit recipes with ingredients
           </p>
-          <Button variant="primary">Manage Recipes</Button>
+          <Link href="/settings/recipes">
+            <Button variant="primary">Manage Recipes</Button>
+          </Link>
         </Card>
 
         <Card className="flex flex-col">
@@ -41,7 +45,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Maintain the ingredient database
           </p>
-          <Button variant="primary">Manage Ingredients</Button>
+          <Link href="/settings/ingredients">
+            <Button variant="primary">Manage Ingredients</Button>
+          </Link>
         </Card>
 
         <Card className="flex flex-col">
@@ -51,7 +57,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Set portion size adjustments by age group
           </p>
-          <Button variant="primary">Manage Multipliers</Button>
+          <Link href="/settings/age-multipliers">
+            <Button variant="primary">Manage Multipliers</Button>
+          </Link>
         </Card>
 
         <Card className="flex flex-col">
@@ -61,7 +69,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Define how many children per Kita, age group, diet type
           </p>
-          <Button variant="primary">Manage Portions</Button>
+          <Link href="/settings/portion-counts">
+            <Button variant="primary">Manage Portions</Button>
+          </Link>
         </Card>
 
         <Card className="flex flex-col">
@@ -71,7 +81,9 @@ export default function SettingsPage() {
           <p className="text-sm text-gray-600 mb-4 flex-1">
             Database, API keys, and integration settings
           </p>
-          <Button variant="secondary">System Settings</Button>
+          <Link href="/settings/system">
+            <Button variant="secondary">System Settings</Button>
+          </Link>
         </Card>
       </div>
 

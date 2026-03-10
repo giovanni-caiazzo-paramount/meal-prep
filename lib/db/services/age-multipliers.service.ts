@@ -25,7 +25,7 @@ export async function getAgeMultipliers(): Promise<AgeMultiplier[]> {
     throw new Error(`Failed to fetch age multipliers: ${error.message}`);
   }
 
-  return data.map((item) => AgeMultiplierSchema.parse(item));
+  return (data as unknown[]).map((item) => AgeMultiplierSchema.parse(item));
 }
 
 export async function getAgeMultiplier(
