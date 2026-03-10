@@ -21,8 +21,8 @@ const IngredientInputSchema = z.object({
 });
 
 const AgeMultiplierInputSchema = z.object({
-  age_group: z.enum(["Krippe", "Kita", "Hort"]),
-  ingredient_category: z.enum(["Anders", "Gemüse", "Suppe"]),
+  age_group: z.string().min(1),
+  ingredient_category: z.string().min(1),
   multiplier: z.number().positive(),
 });
 
@@ -258,8 +258,8 @@ export async function deleteIngredientAction(id: number) {
 }
 
 export async function upsertAgeMultiplierAction(input: {
-  age_group: "Krippe" | "Kita" | "Hort";
-  ingredient_category: "Anders" | "Gemüse" | "Suppe";
+  age_group: string;
+  ingredient_category: string;
   multiplier: number;
 }) {
   try {
@@ -283,8 +283,8 @@ export async function upsertAgeMultiplierAction(input: {
 }
 
 export async function deleteAgeMultiplierAction(
-  ageGroup: "Krippe" | "Kita" | "Hort",
-  ingredientCategory: "Anders" | "Gemüse" | "Suppe"
+  ageGroup: string,
+  ingredientCategory: string
 ) {
   try {
     const supabase = createServerSupabaseClient();

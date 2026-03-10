@@ -11,6 +11,15 @@ export default async function AgeMultipliersPage() {
   const result = await getAgeMultipliers();
   const multipliers = result.success ? result.data : [];
 
+  const ageGroups = [...new Set(multipliers.map((m) => m.age_group))].sort();
+  const categories = [
+    ...new Set(
+      multipliers
+        .map((m) => m.ingredient_category)
+        .filter((c): c is string => c !== null && c !== undefined)
+    ),
+  ].sort();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -33,7 +42,11 @@ export default async function AgeMultipliersPage() {
         </Card>
       )}
 
-      <SettingsAgeMultipliersClient initialMultipliers={multipliers} />
+      <SettingsAgeMultipliersClient
+        initialMultipliers={multipliers}
+        ageGroups={ageGroups}
+        categories={categories}
+      />
 
       <Card className="bg-blue-50 border-blue-200">
         <p className="text-sm text-blue-800">
