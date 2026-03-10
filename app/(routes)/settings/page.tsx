@@ -75,11 +75,11 @@ export default function SettingsPage() {
         </Card>
       </div>
 
-      <Card className="bg-blue-50 border-blue-200">
-        <h2 className="text-lg font-semibold text-blue-900 mb-3">
+      <Card className="bg-muted border-border">
+        <h2 className="text-lg font-semibold text-foreground mb-3">
           ℹ️ Database Status
         </h2>
-        <div className="space-y-2 text-sm text-blue-800">
+        <div className="space-y-2 text-sm text-muted-foreground">
           <p>
             <strong>Connected:</strong> Supabase PostgreSQL
           </p>
@@ -88,7 +88,7 @@ export default function SettingsPage() {
             recipe_ingredients, menu_plan, portion_counts, age_multipliers,
             inventory
           </p>
-          <div className="mt-4 p-3 bg-white rounded border border-blue-200">
+          <div className="mt-4 p-3 bg-background rounded border border-border">
             <p className="text-xs text-gray-600">
               Tables are pre-populated from the backend. Verify connection by
               going to the Menu Planning page.

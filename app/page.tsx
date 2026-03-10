@@ -4,9 +4,9 @@ import { Card, Button } from "@/components/ui";
 export default function Home() {
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-8 text-white">
+      <div className="bg-gradient-to-r from-primary to-accent rounded-lg p-8 text-white">
         <h1 className="text-4xl font-bold mb-2">Welcome to Karotte & Erbse</h1>
-        <p className="text-blue-100">
+        <p className="text-white/80">
           Smart catering automation system for menu planning, shopping lists,
           and kitchen preparation
         </p>
@@ -94,11 +94,11 @@ export default function Home() {
         </Card>
       </div>
 
-      <Card className="bg-blue-50 border-blue-200">
-        <h2 className="text-lg font-semibold text-blue-900 mb-2">
+      <Card className="bg-muted border-border">
+        <h2 className="text-lg font-semibold text-foreground mb-2">
           ℹ️ Getting Started
         </h2>
-        <ul className="space-y-2 text-sm text-blue-800">
+        <ul className="space-y-2 text-sm text-muted-foreground">
           <li>
             1. Start by configuring your Kitas and age multipliers in Settings
           </li>

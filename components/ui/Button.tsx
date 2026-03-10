@@ -14,10 +14,10 @@ interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800",
-  secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-gray-400",
-  danger: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800",
-  ghost: "text-gray-700 hover:bg-gray-100 active:bg-gray-200",
+  primary: "bg-primary text-primary-foreground hover:opacity-90 active:opacity-80",
+  secondary: "bg-muted text-foreground hover:bg-border active:opacity-80",
+  danger: "bg-red-700 text-white hover:bg-red-800 active:bg-red-900",
+  ghost: "text-foreground hover:bg-muted active:bg-border",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

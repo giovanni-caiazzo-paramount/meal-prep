@@ -63,7 +63,7 @@ export default function MenuPage() {
         <MenuPageContent />
       </Suspense>
 
-      <Card className="border-l-4 border-l-blue-500">
+      <Card className="border-l-4 border-l-primary">
         <h2 className="font-semibold text-gray-900 mb-2">💡 Tips</h2>
         <ul className="space-y-1 text-sm text-gray-600">
           <li>• Select recipes for each diet type for each day of the week</li>

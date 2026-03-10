@@ -45,9 +45,9 @@ export function ShoppingListView({
     >
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <p className="text-sm text-gray-600">Total Items</p>
-            <p className="text-2xl font-bold text-blue-600">{totalItems}</p>
+          <div className="bg-muted p-4 rounded-lg">
+            <p className="text-sm text-muted-foreground">Total Items</p>
+            <p className="text-2xl font-bold text-primary">{totalItems}</p>
           </div>
           <div className="bg-green-50 p-4 rounded-lg">
             <p className="text-sm text-gray-600">Total Shopping Amount</p>

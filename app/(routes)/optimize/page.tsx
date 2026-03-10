@@ -17,15 +17,15 @@ export default function OptimizationPage() {
         </p>
       </div>
 
-      <Card className="bg-blue-50 border-blue-200">
-        <h2 className="text-lg font-semibold text-blue-900 mb-4">
+      <Card className="bg-muted border-border">
+        <h2 className="text-lg font-semibold text-foreground mb-4">
           🤖 How it Works
         </h2>
-        <p className="text-blue-800 mb-4">
+        <p className="text-muted-foreground mb-4">
           This feature analyzes your current menu plan and inventory to suggest
           recipe changes that:
         </p>
-        <ul className="space-y-2 text-sm text-blue-800">
+        <ul className="space-y-2 text-sm text-muted-foreground">
           <li>✓ Use leftover ingredients efficiently</li>
           <li>✓ Reduce overall shopping list cost</li>
           <li>✓ Maintain nutritional balance</li>
