@@ -5,8 +5,8 @@
 import { Suspense } from "react";
 import { Card } from "@/components/ui";
 import { KitchenPrepSheet } from "@/components/features";
+import KitchenPageClient from "@/components/features/KitchenPageClient";
 import { getKitchenPrepSheetForDay } from "@/app/actions/calculations.actions";
-import KitchenPageClient from "./client";
 
 function getCurrentDate() {
   return new Date().toISOString().split("T")[0];
@@ -26,9 +26,18 @@ async function KitchenPrepSheetContent({ date }: { date: string }) {
   return <KitchenPrepSheet date={date} sheetData={result.data} />;
 }
 
-export default function KitchenPage() {
+interface KitchenPageProps {
+  searchParams?: Promise<{
+    date?: string;
+  }>;
+}
+
+export default async function KitchenPage({ searchParams }: KitchenPageProps) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const selectedDate = resolvedSearchParams?.date ?? getCurrentDate();
+
   return (
-    <KitchenPageClient>
+    <KitchenPageClient selectedDate={selectedDate}>
       <Suspense
         fallback={
           <Card>
@@ -36,9 +45,7 @@ export default function KitchenPage() {
           </Card>
         }
       >
-        <KitchenPrepSheetContent
-          date={new Date().toISOString().split("T")[0]}
-        />
+        <KitchenPrepSheetContent date={selectedDate} />
       </Suspense>
     </KitchenPageClient>
   );

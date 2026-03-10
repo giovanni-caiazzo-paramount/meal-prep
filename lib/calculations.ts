@@ -13,21 +13,14 @@ import type {
   InventoryItem,
   AgeMultiplier,
   Ingredient,
+  IngredientUnit,
 } from "./db/types";
 
 interface IngredientRequirement {
   ingredientId: number;
   ingredientName: string;
-  unit: string;
+  unit: IngredientUnit;
   amount: Decimal;
-}
-
-interface KitaRecipeRequirements {
-  kitaId: number;
-  kitaName: string;
-  recipeId: number;
-  recipeName: string;
-  requirements: IngredientRequirement[];
 }
 
 /**
@@ -91,26 +84,6 @@ function calculateRecipeRequirements(
     unit: ri.ingredient.unit,
     amount: new Decimal(ri.amount_per_portion).times(totalAdjustedPortions),
   }));
-}
-
-/**
- * Aggregate ingredient requirements across all Kitas
- */
-function aggregateRequirements(
-  requirements: IngredientRequirement[]
-): Map<number, IngredientRequirement> {
-  const aggregated = new Map<number, IngredientRequirement>();
-
-  for (const req of requirements) {
-    if (aggregated.has(req.ingredientId)) {
-      const existing = aggregated.get(req.ingredientId)!;
-      existing.amount = existing.amount.plus(req.amount);
-    } else {
-      aggregated.set(req.ingredientId, { ...req });
-    }
-  }
-
-  return aggregated;
 }
 
 /**
@@ -203,7 +176,7 @@ export async function calculateKitchenPrepSheet(
   ageMultipliers: Map<string, AgeMultiplier>,
   ingredientsMap: Map<number, Ingredient>
 ): Promise<KitchenPrepSheetRow[]> {
-  const rows: KitchenPrepSheetRow[] = [];
+  const aggregatedRows = new Map<string, KitchenPrepSheetRow>();
 
   // Get menu items for this date
   const dayMenuItems = menuItems.filter((m) => m.date === date);
@@ -227,17 +200,25 @@ export async function calculateKitchenPrepSheet(
           menuItem.diet_type
         );
 
-        // Add each ingredient to the prep sheet
+        // Add each ingredient to the prep sheet (aggregated by kita + ingredient)
         for (const req of requirements) {
           const ingredient = ingredientsMap.get(req.ingredientId);
           if (!ingredient) continue;
 
-          rows.push({
+          const key = `${kitaId}:${req.ingredientId}`;
+          const existing = aggregatedRows.get(key);
+
+          if (existing) {
+            existing.quantity += Number(req.amount);
+            continue;
+          }
+
+          aggregatedRows.set(key, {
             kita_id: kitaId,
             kita_name: kita.name,
             ingredient_id: req.ingredientId,
             ingredient_name: req.ingredientName,
-            unit: req.unit as any,
+            unit: req.unit,
             quantity: Number(req.amount),
           });
         }
@@ -249,6 +230,8 @@ export async function calculateKitchenPrepSheet(
       }
     }
   }
+
+  const rows = Array.from(aggregatedRows.values());
 
   // Sort by kita, then ingredient name
   return rows.sort((a, b) => {

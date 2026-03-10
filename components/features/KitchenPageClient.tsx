@@ -4,18 +4,29 @@
 
 "use client";
 
-import { ReactNode } from "react";
-import { Card, Button, Input } from "@/components/ui";
+import { ReactNode, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Card, Input } from "@/components/ui";
 
 interface KitchenPageClientProps {
+  selectedDate: string;
   children: ReactNode;
 }
 
 export default function KitchenPageClient({
+  selectedDate,
   children,
 }: KitchenPageClientProps) {
-  // For now, we'll just show a placeholder
-  // State management for date selection can be added later
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [date, setDate] = useState(selectedDate);
+
+  const handleDateChange = (nextDate: string) => {
+    setDate(nextDate);
+    startTransition(() => {
+      router.push(`/kitchen?date=${nextDate}`);
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -27,6 +38,18 @@ export default function KitchenPageClient({
           Daily cooking instructions with ingredient quantities per school
         </p>
       </div>
+
+      <Card>
+        <div className="max-w-xs">
+          <Input
+            label="Preparation Date"
+            type="date"
+            value={date}
+            onChange={(event) => handleDateChange(event.target.value)}
+            disabled={isPending}
+          />
+        </div>
+      </Card>
 
       {children}
 
