@@ -12,23 +12,15 @@ export const DietTypeSchema = z.enum([
   "fleisch",
   "pescetarisch",
 ]);
-export const RecipeCategorySchema = z.enum([
-  "Hauptspeise",
-  "Nachtisch",
-  "Rohkost",
-]);
-export const PortionAdjustmentCategorySchema = z.enum([
-  "Anders",
-  "Gemüse",
-  "Suppe",
-]);
-export const IngredientUnitSchema = z.enum(["g", "ml"]);
+export const RecipeCategorySchema = z.string().nullable();
+export const PortionAdjustmentCategorySchema = z.string().nullable();
+export const IngredientUnitSchema = z.string();
 
 // Database model schemas
 export const KitaSchema = z.object({
   id: z.number().int().positive(),
   name: z.string().min(1).max(255),
-  city: z.string().max(255).optional(),
+  city: z.string().max(255).optional().nullable(),
 });
 
 export const RecipeSchema = z.object({
