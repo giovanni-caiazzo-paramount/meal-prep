@@ -114,6 +114,87 @@ export async function generateMenuOptimizationSuggestions(
   }
 }
 
+// ─── Leftover Analysis ────────────────────────────────────────────────────────
+
+export interface LeftoverItem {
+  ingredient_id: number;
+  ingredient_name: string;
+  leftover_amount: number;
+  unit: string;
+}
+
+const LeftoverSuggestionSchema = z.object({
+  recipe_id: z.number().describe("ID of the recipe from the available list"),
+  recipe_name: z.string().describe("Name of the recipe"),
+  suggestion_text: z
+    .string()
+    .describe("How and why this recipe uses up the leftover ingredients"),
+  leftover_ingredients_used: z.array(
+    z.object({
+      ingredient_name: z.string(),
+      estimated_amount: z
+        .number()
+        .describe("Estimated amount consumed in the recipe"),
+      unit: z.string().describe("Unit: g, ml, or Stück"),
+    })
+  ),
+});
+
+export type LeftoverSuggestion = z.infer<typeof LeftoverSuggestionSchema>;
+
+/**
+ * Given leftover inventory items, suggest recipes that use them up.
+ */
+export async function generateLeftoverSuggestions(
+  leftovers: LeftoverItem[],
+  allRecipes: RecipeWithIngredients[]
+): Promise<LeftoverSuggestion[]> {
+  const recipesContext = allRecipes
+    .map((r) => ({
+      id: r.id,
+      name: r.name,
+      ingredients: r.ingredients
+        .map(
+          (ri) =>
+            `${ri.ingredient.name} (${ri.amount_per_portion}${ri.ingredient.unit}/portion)`
+        )
+        .join(", "),
+    }))
+    .slice(0, 30); // Limit to avoid token overflow
+
+  try {
+    const result = await generateObject({
+      model: lmstudio(env.LMSTUDIO_MODEL),
+      schema: z.array(LeftoverSuggestionSchema).max(5),
+      prompt: `
+        You are a catering optimization assistant for a German Kita (daycare) meal service.
+
+        The following ingredients will be LEFT OVER after this week's planned menu:
+        ${leftovers.map((l) => `- ${l.ingredient_name}: ${l.leftover_amount} ${l.unit}`).join("\n")}
+
+        Available recipes in the database:
+        ${recipesContext.map((r) => `- [ID: ${r.id}] ${r.name}: uses ${r.ingredients}`).join("\n")}
+
+        Suggest up to 5 recipes from the list above that would best use up these leftover ingredients.
+        For each suggestion:
+        - Only choose recipes that appear in the list above (use the exact ID and name)
+        - Explain why this recipe is a good use of the leftovers
+        - List which leftover ingredients would be consumed and estimate the amounts
+
+        Prioritize recipes that consume the largest quantities of leftovers.
+        Only return valid recipes from the provided list.
+      `,
+    });
+
+    return result.object;
+  } catch (error) {
+    console.error("Error generating leftover suggestions:", error);
+    return [];
+  }
+}
+
+// ─── Menu Suggestion Validation ────────────────────────────────────────────────
+
 /**
  * Validate a suggestion and calculate shopping list difference
  * (This would be called after user approves a suggestion)
