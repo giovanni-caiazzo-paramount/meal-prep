@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
 import { getAgeMultipliers } from "@/app/actions/data.actions";
+import SettingsAgeMultipliersClient from "@/components/features/SettingsAgeMultipliersClient";
 
 export default async function AgeMultipliersPage() {
   const result = await getAgeMultipliers();
@@ -32,44 +33,7 @@ export default async function AgeMultipliersPage() {
         </Card>
       )}
 
-      <Card>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Age Group
-              </th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Ingredient Category
-              </th>
-              <th className="text-right p-2 font-semibold text-gray-700">
-                Multiplier
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {multipliers.map((m, idx) => (
-              <tr
-                key={idx}
-                className="border-b border-gray-100 hover:bg-gray-50"
-              >
-                <td className="p-2 font-medium text-gray-900">{m.age_group}</td>
-                <td className="p-2 text-gray-600">{m.ingredient_category}</td>
-                <td className="p-2 text-right tabular-nums text-gray-700">
-                  {m.multiplier}×
-                </td>
-              </tr>
-            ))}
-            {multipliers.length === 0 && (
-              <tr>
-                <td colSpan={3} className="p-4 text-center text-gray-500">
-                  No multipliers found. Add data via Supabase.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </Card>
+      <SettingsAgeMultipliersClient initialMultipliers={multipliers} />
 
       <Card className="bg-blue-50 border-blue-200">
         <p className="text-sm text-blue-800">

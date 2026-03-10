@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
 import { getKitas } from "@/app/actions/data.actions";
+import SettingsKitasClient from "@/components/features/SettingsKitasClient";
 
 export default async function KitasPage() {
   const result = await getKitas();
@@ -30,40 +31,7 @@ export default async function KitasPage() {
         </Card>
       )}
 
-      <Card>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left p-2 font-semibold text-gray-700">ID</th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Name
-              </th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                City
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {kitas.map((kita) => (
-              <tr
-                key={kita.id}
-                className="border-b border-gray-100 hover:bg-gray-50"
-              >
-                <td className="p-2 text-gray-500">{kita.id}</td>
-                <td className="p-2 font-medium text-gray-900">{kita.name}</td>
-                <td className="p-2 text-gray-600">{kita.city ?? "—"}</td>
-              </tr>
-            ))}
-            {kitas.length === 0 && (
-              <tr>
-                <td colSpan={3} className="p-4 text-center text-gray-500">
-                  No kitas found. Add data via Supabase.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </Card>
+      <SettingsKitasClient initialKitas={kitas} />
     </div>
   );
 }

@@ -14,7 +14,7 @@ export type IngredientUnit = "g" | "ml";
 export interface Kita {
   id: number;
   name: string;
-  city?: string;
+  city?: string | null;
 }
 
 export interface Recipe {

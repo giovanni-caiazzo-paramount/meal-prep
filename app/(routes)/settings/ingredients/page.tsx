@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
 import { getIngredients } from "@/app/actions/data.actions";
+import SettingsIngredientsClient from "@/components/features/SettingsIngredientsClient";
 
 export default async function IngredientsPage() {
   const result = await getIngredients();
@@ -28,42 +29,7 @@ export default async function IngredientsPage() {
         </Card>
       )}
 
-      <Card>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left p-2 font-semibold text-gray-700">ID</th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Name
-              </th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Unit
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {ingredients.map((ingredient) => (
-              <tr
-                key={ingredient.id}
-                className="border-b border-gray-100 hover:bg-gray-50"
-              >
-                <td className="p-2 text-gray-500">{ingredient.id}</td>
-                <td className="p-2 font-medium text-gray-900">
-                  {ingredient.name}
-                </td>
-                <td className="p-2 text-gray-600">{ingredient.unit}</td>
-              </tr>
-            ))}
-            {ingredients.length === 0 && (
-              <tr>
-                <td colSpan={3} className="p-4 text-center text-gray-500">
-                  No ingredients found. Add data via Supabase.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </Card>
+      <SettingsIngredientsClient initialIngredients={ingredients} />
     </div>
   );
 }

@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Button, Card } from "@/components/ui";
 import { getRecipes } from "@/app/actions/data.actions";
+import SettingsRecipesClient from "@/components/features/SettingsRecipesClient";
 
 export default async function RecipesPage() {
   const result = await getRecipes();
@@ -28,46 +29,7 @@ export default async function RecipesPage() {
         </Card>
       )}
 
-      <Card>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left p-2 font-semibold text-gray-700">ID</th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Name
-              </th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Category
-              </th>
-              <th className="text-left p-2 font-semibold text-gray-700">
-                Adjustment Category
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {recipes.map((recipe) => (
-              <tr
-                key={recipe.id}
-                className="border-b border-gray-100 hover:bg-gray-50"
-              >
-                <td className="p-2 text-gray-500">{recipe.id}</td>
-                <td className="p-2 font-medium text-gray-900">{recipe.name}</td>
-                <td className="p-2 text-gray-600">{recipe.category}</td>
-                <td className="p-2 text-gray-600">
-                  {recipe.portion_adjustment_category}
-                </td>
-              </tr>
-            ))}
-            {recipes.length === 0 && (
-              <tr>
-                <td colSpan={4} className="p-4 text-center text-gray-500">
-                  No recipes found. Add data via Supabase.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </Card>
+      <SettingsRecipesClient initialRecipes={recipes} />
     </div>
   );
 }
